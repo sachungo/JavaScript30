@@ -43,4 +43,8 @@ html {
     background: black;
     position: absolute;
     top: 50%;
+    transform-origin: 100%; /* for the clock hand to rotate on the extreme right as the center*/
+    transform: rotate(90deg); /* to rotate all the clock hands to point at the normal `12` position, a.k.a at the top */
+    transition: all 0.05s; /* to enable the clock hands move position smoothly */
+    transition-timing-function: cubic-bezier(0.12, 2.73, 0.4, 1.13); /* to create the tick-tock illusion of a clock moving (0.1, 2.7, 0.58, 1) */
   }
