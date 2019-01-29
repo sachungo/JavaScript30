@@ -18,7 +18,30 @@
     <link rel="stylesheet" href="style.css">
 
   <script>
+    function rotateHands(timerCount, typeOfHand, element) {
+      const DEGREE_OFFSET = 90; // each hand was transformed by 90 degrees. This value offsets the transformation
+      const UNIT_OFFSET = typeOfHand === 'hour' ? 12 : 60;
+      const inDegrees = ((timerCount / UNIT_OFFSET) * 360) + DEGREE_OFFSET;
+      element.style.transform = `rotate(${inDegrees}deg)`;
+    }
 
+    function setDate() {
+      const now = new Date();
+      const seconds = now.getSeconds();
+      const minutes = now.getMinutes();
+      const hours = now.getHours();
+
+      const secondHand = document.querySelector('.second-hand');
+      const minuteHand = document.querySelector('.min-hand');
+      const hourHand = document.querySelector('.hour-hand');
+
+      rotateHands(seconds, 'second', secondHand);
+      rotateHands(minutes, 'minute', minuteHand);
+      rotateHands(hours, 'hour', hourHand);
+    }
+
+    // run the setDate function every second
+    setInterval(setDate, 1000);
 
   </script>
 </body>
