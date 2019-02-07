@@ -7,6 +7,8 @@
 <body>
   <h2>Update CSS Variables with <span class='hl'>JS</span></h2>
 
+  <!-- input type of range creates the range slider -->
+  <!-- input type of color gives us the color picker -->
   <div class="controls">
     <label for="spacing">Spacing:</label>
     <input id="spacing" type="range" name="spacing" min="10" max="200" value="10" data-sizing="px">
@@ -21,6 +23,10 @@
   <img src="https://source.unsplash.com/7bwQXzbF6KE/800x500">
 
   <style>
+    /* CSS variables  is declared on an element.
+     * In this case, we are using the :root pseudo-class
+     * https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_variables
+     */
     :root {
       --base: #ffc600;
       --spacing: 10px;
@@ -60,17 +66,7 @@
   </style>
 
   <script>
-    const inputs = document.querySelectorAll('.controls input');
-
-    function handleUpdate() {
-      const suffix = this.dataset.sizing || '';
-      document.documentElement.style.setProperty(`--${this.name}`, this.value + suffix);
-    }
-
-    inputs.forEach(input => input.addEventListener('change', handleUpdate));
-    inputs.forEach(input => input.addEventListener('mousemove', handleUpdate));
   </script>
-
 
 </body>
 </html>
