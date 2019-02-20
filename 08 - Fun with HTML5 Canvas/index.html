@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>HTML5 Canvas</title>
+</head>
+<body>
+<canvas id="draw" width="800" height="800"></canvas>
+<script>
+  const canvas = document.getElementById('draw');
+  const context = canvas.getContext('2d');
+
+  // make the canvas the same size as the window
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  // base settings
+  context.strokeStyle = '#BADA55';
+  context.lineJoin = 'round';
+  context.lineCap = 'round';
+
+  let isDrawing = false;
+  let lastX = 0;
+  let lastY = 0;
+
+  function draw (e) {
+    // stop the function from running when the mouse is not pressed down
+    if (!isDrawing) return;
+
+    // draw
+    context.beginPath();
+    context.moveTo(lastX, lastY); // start from
+    context.lineTo(e.offsetX, e.offsetY); // go to
+    context.lineWidth = 100;
+    context.stroke();
+    [lastX, lastY] = [e.offsetX, e.offsetY]; // destructuring
+  };
+
+  // draw on the canvas
+  canvas.addEventListener('mousemove', draw);
+
+  // set and reset the drawing flag
+  canvas.addEventListener('mousedown', (e) => {
+    isDrawing = true;
+    [lastX, lastY] = [e.offsetX, e.offsetY];
+  });
+  canvas.addEventListener('mouseup', () => isDrawing = false);
+  canvas.addEventListener('mouseout', () => isDrawing = false);
+</script>
+
+<style>
+  html, body {
+    margin: 0;
+  }
+</style>
+
+</body>
+</html>
