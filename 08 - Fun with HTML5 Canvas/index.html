@@ -22,18 +22,40 @@
   let isDrawing = false;
   let lastX = 0;
   let lastY = 0;
+  let hue = 0;
+  let direction = true;
 
   function draw (e) {
     // stop the function from running when the mouse is not pressed down
     if (!isDrawing) return;
 
     // draw
+    context.strokeStyle = `hsl(${hue}, 100%, 50%)`;
     context.beginPath();
     context.moveTo(lastX, lastY); // start from
     context.lineTo(e.offsetX, e.offsetY); // go to
-    context.lineWidth = 100;
     context.stroke();
     [lastX, lastY] = [e.offsetX, e.offsetY]; // destructuring
+
+    // Increase the hue value and reset it if it reaches 360, which is the red color
+    // Note that hue of 0 is also a red color
+    hue++;
+    if (hue >= 360) {
+      hue = 0;
+    }
+
+    // Flip the linewidth direction when the maximum value of 100 or
+    // minimum value is reached
+    if (context.lineWidth >= 100 || context.lineWidth <= 1) {
+      direction = !direction;
+    }
+
+    // increase linewidth when direction is true. Otherwise, decrease it
+    if (direction) {
+      context.lineWidth++;
+    } else {
+      context.lineWidth--;
+    }
   };
 
   // draw on the canvas
@@ -46,6 +68,14 @@
   });
   canvas.addEventListener('mouseup', () => isDrawing = false);
   canvas.addEventListener('mouseout', () => isDrawing = false);
+
+  /*
+   * NOTE: To determine which color will be displayed when a stroke passes over
+   * another one, set `globalCompositeOperation`.
+   * Read more in https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/globalCompositeOperation
+   * E.g.
+   *  context.globalCompositeOperation = 'source-in'
+   */
 </script>
 
 <style>
