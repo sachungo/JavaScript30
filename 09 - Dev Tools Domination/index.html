@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Console Tricks!</title>
+</head>
+<body>
+
+  <p onClick="makeGreen()">×BREAK×DOWN×</p>
+
+  <script>
+    const dogs = [{ name: 'Snickers', age: 2 }, { name: 'hugo', age: 8 }];
+
+    function makeGreen() {
+      const p = document.querySelector('p');
+      p.style.color = '#BADA55';
+      p.style.fontSize = '50px';
+    }
+
+    // Regular
+    console.log('Testing');
+
+    // Interpolated
+    console.log('I am a %s string!', '💩');
+    const testing = '💩';
+    console.log(`I am an ES6 ${testing} string`);
+
+    // Styled
+    console.log('%c I am a styled TEXT!', 'font-size:50px; color: #BADA55');
+
+    // warning!
+     console.warn('Wrong thing!');
+
+    // Error :|
+    console.error('testing Error');
+
+    // Info
+    console.info('Seriously? I am an info');
+
+    // Testing
+    console.assert(1 === 2, 'wrong assertion!'); // only prints the message when the assertion is falsy
+
+    // clearing
+    console.clear();
+
+    // Viewing DOM Elements
+    const para = document.querySelector('p');
+    console.log(para);
+    console.dir(para);
+
+    // Grouping together
+    dogs.forEach(dog => {
+      // use console.groupCollapsed() to automatically collapse the logs, instead of `console.group`
+      console.group(`${dog.name}`);
+      console.log(`THIS is ${dog.name} dog`);
+      console.log(`${dog.name} is ${dog.age} years old`);
+      console.groupEnd();
+    });
+
+    // counting
+    console.count('Archer');
+    console.count('Archer');
+    console.count('Lola')
+    console.count('Archer');
+    console.count('Lola')
+    console.count('Archer');
+    console.count('Lola')
+
+    // timing
+    console.time('fetching data');
+    fetch('https://api.github.com/users/sachungo')
+      .then(data => data.json())
+      .then(data => {
+        console.timeEnd('fetching data');
+        console.log(data);
+      });
+
+    // table
+    fetch('https://api.github.com/users/sachungo/repos')
+      .then(response => response.json())
+      .then(repos => {
+        console.table(repos);
+      });
+
+  </script>
+</body>
+</html>
