@@ -56,19 +56,22 @@
         timeout = setTimeout(later, wait);
         if (callNow) func.apply(context, args);
       };
-    };
+    }
 
     const sliderImages = document.querySelectorAll('.slide-in');
 
-    function checkSlide() {
+    function checkSlide(e) {
       sliderImages.forEach(sliderImage => {
-        // half way through the image
-        const slideInAt = (window.scrollY + window.innerHeight) - sliderImage.height / 2;
-        // bottom of the image
+        // calculate the position at which to slide in the image, which should be halfway through the image
+        const slideInAt = (window.scrollY + window.innerHeight) - (sliderImage.height / 2);
+
+        // calculate the position of the bottom of the image
         const imageBottom = sliderImage.offsetTop + sliderImage.height;
-        const isHalfShown = slideInAt > sliderImage.offsetTop;
+
+        const isHalfDown = slideInAt > sliderImage.offsetTop;
         const isNotScrolledPast = window.scrollY < imageBottom;
-        if (isHalfShown && isNotScrolledPast) {
+        
+        if (isHalfDown && isNotScrolledPast) {
           sliderImage.classList.add('active');
         } else {
           sliderImage.classList.remove('active');
@@ -77,6 +80,7 @@
     }
 
     window.addEventListener('scroll', debounce(checkSlide));
+
 
   </script>
 
@@ -88,11 +92,11 @@
       font-size: 20px;
       font-weight: 200;
     }
-    
+
     body {
       margin: 0;
     }
-    
+
     *, *:before, *:after {
       box-sizing: inherit;
     }
@@ -127,7 +131,7 @@
     .align-left.slide-in {
       transform: translateX(-30%) scale(0.95);
     }
-    
+
     .align-right.slide-in {
       transform: translateX(30%) scale(0.95);
     }
