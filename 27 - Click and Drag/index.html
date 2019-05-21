@@ -43,6 +43,7 @@
   slider.addEventListener('mousedown', (e) => {
     isDown = true;
     slider.classList.add('active');
+
     startX = e.pageX - slider.offsetLeft;
     scrollLeft = slider.scrollLeft;
   });
@@ -58,14 +59,14 @@
   });
 
   slider.addEventListener('mousemove', (e) => {
-    if (!isDown) return;  // stop the fn from running
-    e.preventDefault();
-    const x = e.pageX - slider.offsetLeft;
-    const walk = (x - startX) * 3;
-    slider.scrollLeft = scrollLeft - walk;
-  });
+    if (isDown) return;
 
+    e.preventDefault();
+    const x = e.pageX - slider.offsetLeft; // recalculate x each time the mouse moves: console.log({x, startX})
+    const mouseWalk = x - startX; // you can multiply the value by arbitrary number to move the mouse faster. E.g. `(x - startX) * 3`
+    slider.scrollLeft = scrollLeft - mouseWalk; // if you just assign `mouseWalk` value directly to it then it will be jumpy as it is recalculated frequently
+  });
 </script>
 
-  </body>
+</body>
 </html>
